@@ -1,25 +1,21 @@
-import WelcomeMessage from './components/WelcomeMessage';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
-import Footer from './components/Footer';
 import UserProfile from './components/UserProfile';
+import Footer from './components/Footer';
 
 function App() {
-    return (
-        <div>
-            <WelcomeMessage />
-
-            <Header />
-            <MainContent />
-            <Footer />
-
-            <UserProfile
-                name="Alice"
-                age="25"
-                bio="Loves hiking and photography"
-            />
-        </div>
-    );
+  return (
+    <>
+      <Header />
+      <MainContent />
+      <UserProfile
+        name="John Doe"
+        age={28}
+        bio="A passionate traveler and software developer."
+      />
+      <Footer />
+    </>
+  );
 }
 
 export default App;
