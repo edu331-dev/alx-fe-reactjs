@@ -5,10 +5,13 @@ function MainContent() {
     <main
       style={{
         padding: "20px",
-        backgroundColor: "#f5f5f5"
+        backgroundColor: "#f5f5f5",
+        textAlign: "center"
       }}
     >
-      <p>Main content goes here.</p>
+      <p style={{ fontSize: "16px" }}>
+        I love to visit New York, Paris, and Tokyo.
+      </p>
     </main>
   );
 }
