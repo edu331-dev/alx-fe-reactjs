@@ -11,10 +11,5 @@ return (
 </div>
 );
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> 743a435e3e162a71a553852bde02c02994b5e2de
-
 
 export default App;
