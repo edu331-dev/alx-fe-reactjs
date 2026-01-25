@@ -6,10 +6,8 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (!title || !description) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     addRecipe({
       id: Date.now(),
@@ -23,20 +21,17 @@ const AddRecipeForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add Recipe</h2>
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <br />
       <textarea
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <br />
       <button type="submit">Add Recipe</button>
     </form>
   );

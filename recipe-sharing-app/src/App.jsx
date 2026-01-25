@@ -3,8 +3,7 @@ import AddRecipeForm from './components/AddRecipeForm';
 
 const App = () => {
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Recipe Sharing App</h1>
+    <div>
       <AddRecipeForm />
       <RecipeList />
     </div>
