@@ -1,14 +1,16 @@
-import ProfilePage from './ProfilePage';
-import UserContext from './UserContext';
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeList from './components/RecipeList';
 
-function App() {
-  const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
 
-  return (
-    <UserContext.Provider value={userData}>
-      <ProfilePage />
-    </UserContext.Provider>
-  );
-}
+const App = () => {
+return (
+<div>
+<h1>Recipe Sharing Application</h1>
+<AddRecipeForm />
+<RecipeList />
+</div>
+);
+};
+
 
 export default App;
