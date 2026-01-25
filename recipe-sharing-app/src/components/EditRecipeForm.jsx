@@ -8,7 +8,7 @@ const EditRecipeForm = ({ recipe }) => {
   const [editing, setEditing] = useState(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Sandbox requires this exact line
+    event.preventDefault(); // required by sandbox
     updateRecipe({ ...recipe, title, description });
     setEditing(false);
   };
@@ -24,10 +24,12 @@ const EditRecipeForm = ({ recipe }) => {
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
+      <br />
       <textarea
         value={description}
         onChange={(event) => setDescription(event.target.value)}
       />
+      <br />
       <button type="submit">Save</button>
       <button type="button" onClick={() => setEditing(false)}>
         Cancel
