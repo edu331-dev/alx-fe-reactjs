@@ -8,11 +8,15 @@ const DeleteRecipeButton = ({ recipeId }) => {
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       deleteRecipe(recipeId);
-      navigate("/");
+      navigate('/');
     }
   };
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return (
+    <button onClick={handleDelete} style={{ marginLeft: '8px' }}>
+      Delete
+    </button>
+  );
 };
 
 export default DeleteRecipeButton;

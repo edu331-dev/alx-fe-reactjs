@@ -8,7 +8,7 @@ const EditRecipeForm = ({ recipe }) => {
   const [editing, setEditing] = useState(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // required by sandbox
+    event.preventDefault();
     updateRecipe({ ...recipe, title, description });
     setEditing(false);
   };
@@ -23,15 +23,15 @@ const EditRecipeForm = ({ recipe }) => {
         type="text"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
+        style={{ padding: '8px', width: '100%', marginBottom: '8px' }}
       />
-      <br />
       <textarea
         value={description}
         onChange={(event) => setDescription(event.target.value)}
+        style={{ padding: '8px', width: '100%', marginBottom: '8px', minHeight: '80px' }}
       />
-      <br />
       <button type="submit">Save</button>
-      <button type="button" onClick={() => setEditing(false)}>
+      <button type="button" onClick={() => setEditing(false)} style={{ marginLeft: '8px' }}>
         Cancel
       </button>
     </form>

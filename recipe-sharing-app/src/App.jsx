@@ -7,7 +7,7 @@ import RecipeDetails from './components/RecipeDetails';
 const App = () => {
   return (
     <Router>
-      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '16px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         <h1>Recipe Sharing App</h1>
         <Routes>
           <Route
