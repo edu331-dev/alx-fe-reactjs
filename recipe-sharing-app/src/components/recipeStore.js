@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-export const useRecipeStore = create((set) => ({
+const useRecipeStore = create((set) => ({
   recipes: [],
   searchTerm: '',
   filteredRecipes: [],
 
-  // Recipe CRUD actions
+  // Add a new recipe
   addRecipe: (newRecipe) =>
     set((state) => {
       const updatedRecipes = [...state.recipes, newRecipe];
@@ -19,16 +19,18 @@ export const useRecipeStore = create((set) => ({
       };
     }),
 
+  // Delete a recipe
   deleteRecipe: (id) =>
     set((state) => ({
-      recipes: state.recipes.filter((r) => r.id !== id),
-      filteredRecipes: state.filteredRecipes.filter((r) => r.id !== id),
+      recipes: state.recipes.filter((recipe) => recipe.id !== id),
+      filteredRecipes: state.filteredRecipes.filter((recipe) => recipe.id !== id),
     })),
 
+  // Update a recipe
   updateRecipe: (updatedRecipe) =>
     set((state) => {
-      const updatedRecipes = state.recipes.map((r) =>
-        r.id === updatedRecipe.id ? updatedRecipe : r
+      const updatedRecipes = state.recipes.map((recipe) =>
+        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
       );
       return {
         recipes: updatedRecipes,
@@ -40,7 +42,7 @@ export const useRecipeStore = create((set) => ({
       };
     }),
 
-  // Search and filter actions
+  // Set search term and filter recipes
   setSearchTerm: (term) =>
     set((state) => ({
       searchTerm: term,
@@ -49,6 +51,7 @@ export const useRecipeStore = create((set) => ({
       ),
     })),
 
+  // Filter recipes based on current search term
   filterRecipes: () =>
     set((state) => ({
       filteredRecipes: state.recipes.filter((recipe) =>
@@ -56,9 +59,12 @@ export const useRecipeStore = create((set) => ({
       ),
     })),
 
+  // Set all recipes
   setRecipes: (recipes) =>
     set({
       recipes,
       filteredRecipes: recipes,
     }),
 }));
+
+export { useRecipeStore };

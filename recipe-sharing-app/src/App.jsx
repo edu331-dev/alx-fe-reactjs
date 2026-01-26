@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SearchBar from './components/SearchBar';
-import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
+import AddRecipeForm from './components/AddRecipeForm';
+import SearchBar from './components/SearchBar';
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-        <h1>Recipe Sharing App</h1>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
+        <h1>Recipe Sharing Application</h1>
         <Routes>
           <Route
             path="/"
@@ -25,6 +25,6 @@ const App = () => {
       </div>
     </Router>
   );
-};
+}
 
 export default App;
