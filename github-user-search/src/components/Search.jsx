@@ -1,146 +1,99 @@
-import { useState } from 'react';
-import { searchGithubUsers } from '../services/githubService';
+import { useState } from "react";
+import { fetchUserData } from "../services/githubService";
 
-export default function Search() {
-  const [query, setQuery] = useState('');
-  const [location, setLocation] = useState('');
-  const [minRepos, setMinRepos] = useState('');
+const Search = () => {
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setPage(1);
+    setError("");
+    setUsers([]);
 
     try {
-      const data = await searchGithubUsers({
-        query,
-        location,
-        minRepos,
-        page: 1,
-      });
+      const data = await fetchUserData(username, location, minRepos);
       setUsers(data.items || []);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadMore = async () => {
-    const nextPage = page + 1;
-    setLoading(true);
-
-    try {
-      const data = await searchGithubUsers({
-        query,
-        location,
-        minRepos,
-        page: nextPage,
-      });
-      setUsers((prev) => [...prev, ...(data.items || [])]);
-      setPage(nextPage);
-    } catch (err) {
-      setError(err.message);
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-2xl mx-auto">
       <form
         onSubmit={handleSearch}
-        className="bg-white dark:bg-gray-900 shadow rounded-lg p-6 space-y-4"
+        className="bg-white p-6 rounded-lg shadow-md space-y-4"
       >
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-          Advanced GitHub User Search
-        </h2>
+        <input
+          type="text"
+          placeholder="GitHub username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full p-2 border rounded"
+          required
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            type="text"
-            placeholder="Username or keyword"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            required
-            className="border rounded px-3 py-2 focus:outline-none focus:ring w-full"
-          />
+        <input
+          type="text"
+          placeholder="Location (optional)"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
 
-          <input
-            type="text"
-            placeholder="Location (e.g. Kenya)"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring w-full"
-          />
-
-          <input
-            type="number"
-            placeholder="Min repositories"
-            value={minRepos}
-            onChange={(e) => setMinRepos(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring w-full"
-          />
-        </div>
+        <input
+          type="number"
+          placeholder="Minimum repositories"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
         >
           Search
         </button>
       </form>
 
-      {error && (
-        <p className="text-red-500 mt-4 text-center">{error}</p>
-      )}
+      {loading && <p className="text-center mt-4">Loading...</p>}
+      {error && <p className="text-center text-red-500 mt-4">{error}</p>}
 
-      <div className="mt-6 space-y-4">
+      <ul className="mt-6 space-y-4">
         {users.map((user) => (
-          <div
+          <li
             key={user.id}
-            className="flex items-center justify-between bg-gray-100 dark:bg-gray-800 p-4 rounded"
+            className="flex items-center space-x-4 bg-white p-4 rounded shadow"
           >
-            <div className="flex items-center gap-4">
-              <img
-                src={user.avatar_url}
-                alt={user.login}
-                className="w-12 h-12 rounded-full"
-              />
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white">
-                  {user.login}
-                </p>
-                <a
-                  href={user.html_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-600 text-sm hover:underline"
-                >
-                  View Profile
-                </a>
-              </div>
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h3 className="font-semibold">{user.login}</h3>
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600"
+              >
+                View Profile
+              </a>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
-
-      {users.length > 0 && (
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={loadMore}
-            disabled={loading}
-            className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 disabled:opacity-50"
-          >
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
-        </div>
-      )}
+      </ul>
     </div>
   );
-}
+};
+
+export default Search;
