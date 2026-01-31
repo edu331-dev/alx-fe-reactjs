@@ -1,29 +1,32 @@
-import axios from "axios";
+const BASE_URL = 'https://api.github.com/search/users';
 
-const BASE_URL = "https://api.github.com";
+export async function searchGithubUsers({
+  query,
+  location,
+  minRepos,
+  page = 1,
+  perPage = 10,
+}) {
+  let searchQuery = query;
 
-/**
- * Fetch GitHub users based on advanced search
- * @param {string} username - GitHub username or keyword
- * @param {string} location - Filter by location
- * @param {number} minRepos - Minimum number of repositories
- * @param {number} page - Page number for pagination
- * @returns {Promise<Object>}
- */
-export const fetchUserData = async (username, location, minRepos, page = 1) => {
-  let query = "";
+  if (location) {
+    searchQuery += ` location:${location}`;
+  }
 
-  if (username) query += `${username}`;
-  if (location) query += `+location:${location}`;
-  if (minRepos) query += `+repos:>=${minRepos}`;
+  if (minRepos) {
+    searchQuery += ` repos:>=${minRepos}`;
+  }
 
-  const response = await axios.get(`${BASE_URL}/search/users`, {
-    params: {
-      q: query,
-      page,
-      per_page: 10,
-    },
-  });
+  const url = `${BASE_URL}?q=${encodeURIComponent(
+    searchQuery
+  )}&page=${page}&per_page=${perPage}`;
 
-  return response.data; // returns { total_count, items: [...] }
-};
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch GitHub users');
+  }
+
+  const data = await response.json();
+  return data;
+}
