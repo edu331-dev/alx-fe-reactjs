@@ -1,32 +1,25 @@
-const BASE_URL = 'https://api.github.com/search/users';
+import axios from "axios";
 
-export async function searchGithubUsers({
-  query,
-  location,
-  minRepos,
-  page = 1,
-  perPage = 10,
-}) {
-  let searchQuery = query;
+const GITHUB_API_URL = "https://api.github.com/search/users?q=";
+
+export const fetchUserData = async (username, location = "", minRepos = 0, page = 1) => {
+  let query = username;
 
   if (location) {
-    searchQuery += ` location:${location}`;
+    query += `+location:${location}`;
   }
 
   if (minRepos) {
-    searchQuery += ` repos:>=${minRepos}`;
+    query += `+repos:>=${minRepos}`;
   }
 
-  const url = `${BASE_URL}?q=${encodeURIComponent(
-    searchQuery
-  )}&page=${page}&per_page=${perPage}`;
+  const url = `${GITHUB_API_URL}${query}&page=${page}&per_page=10`;
 
-  const response = await fetch(url);
+  const response = await axios.get(url, {
+    headers: {
+      Accept: "application/vnd.github+json",
+    },
+  });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch GitHub users');
-  }
-
-  const data = await response.json();
-  return data;
-}
+  return response.data;
+};
