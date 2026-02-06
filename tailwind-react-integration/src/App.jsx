@@ -1,5 +1,4 @@
-import React from "react";
-import UserProfile from "./UserProfile";
+import UserProfile from "./Components/UserProfile";
 
 function App() {
   return (
