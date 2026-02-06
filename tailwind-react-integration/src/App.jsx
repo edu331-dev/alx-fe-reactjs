@@ -1,7 +1,12 @@
-import UserProfile from "./components/UserProfile";
+import React from "react";
+import UserProfile from "./Components/UserProfile";
 
 function App() {
-  return <UserProfile />;
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <UserProfile />
+    </div>
+  );
 }
 
 export default App;
