@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import recipesData from "../data.json";
 
 export default function HomePage() {
@@ -17,7 +18,8 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
-            <div
+            <Link
+              to={`/recipe/${recipe.id}`}
               key={recipe.id}
               className="bg-white rounded-xl shadow-md overflow-hidden transform transition duration-300 hover:shadow-xl hover:scale-105"
             >
@@ -32,15 +34,11 @@ export default function HomePage() {
                   {recipe.title}
                 </h2>
 
-                <p className="text-gray-600 text-sm mb-4">
+                <p className="text-gray-600 text-sm">
                   {recipe.summary}
                 </p>
-
-                <button className="text-green-600 font-medium hover:underline">
-                  View Recipe
-                </button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
