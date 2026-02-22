@@ -13,8 +13,14 @@ const PostsComponent = () => {
     'posts', 
     fetchPosts,
     {
-      // Optional: data stays fresh for 1 minute
-      staleTime: 60000, 
+      // How long the data remains in the cache after being unused (5 minutes)
+      cacheTime: 300000,
+      // Refetch data every time the window regains focus
+      refetchOnWindowFocus: true,
+      // Prevents the UI from flickering by keeping old data while fetching new data
+      keepPreviousData: true,
+      // Data is considered fresh for 1 minute
+      staleTime: 60000,
     }
   );
 
