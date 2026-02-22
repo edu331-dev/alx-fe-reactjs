@@ -1,9 +1,15 @@
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-  // Simulate authentication check
-  const isAuthenticated = localStorage.getItem('auth') === 'true';
+// Define the useAuth hook to manage authentication state
+const useAuth = () => {
+  const user = localStorage.getItem('auth') === 'true';
+  return { isAuthenticated: user };
+};
 
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+
+  // If the user is not authenticated, redirect to the home page
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
