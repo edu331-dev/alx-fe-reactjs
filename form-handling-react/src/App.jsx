@@ -3,11 +3,17 @@ import FormikForm from './components/formikForm';
 
 function App() {
   return (
-    <div>
-      <h1>User Registration</h1>
-      <RegistrationForm />
+    <div style={{ padding: '20px' }}>
+      <h1>React Form Handling</h1>
+      <section>
+        <h2>1. Controlled Component Form</h2>
+        <RegistrationForm />
+      </section>
       <hr />
-      <FormikForm />
+      <section>
+        <h2>2. Formik Form</h2>
+        <FormikForm />
+      </section>
     </div>
   );
 }
