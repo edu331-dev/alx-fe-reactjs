@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const TodoList = () => {
+  // Initial state must match what the tests look for
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React', completed: false },
     { id: 2, text: 'Build a Todo App', completed: false }
@@ -44,7 +45,9 @@ const TodoList = () => {
       <ul>
         {todos.map(todo => (
           <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-            <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
+            <span onClick={() => toggleTodo(todo.id)} style={{ cursor: 'pointer' }}>
+              {todo.text}
+            </span>
             <button onClick={() => deleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
